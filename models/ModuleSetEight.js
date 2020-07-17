@@ -4,21 +4,45 @@ const Schema = mongoose.Schema;
 
 const moduleSetEightSchema = new Schema({
   module1: { type: String, required: true },
-  information1: { type: String },
+  information1: {
+    lessons: { type: Array, required: true },
+    classes: { type: Array, required: true },
+  },
   module2: { type: String, required: true },
-  information2: { type: String },
+  information2: {
+    lessons: { type: Array, required: true },
+    classes: { type: Array, required: true },
+  },
   module3: { type: String, required: true },
-  information3: { type: String },
+  information3: {
+    lessons: { type: Array, required: true },
+    classes: { type: Array, required: true },
+  },
   module4: { type: String, required: true },
-  information4: { type: String },
+  information4: {
+    lessons: { type: Array, required: true },
+    classes: { type: Array, required: true },
+  },
   module5: { type: String, required: true },
-  information5: { type: String },
+  information5: {
+    lessons: { type: Array, required: true },
+    classes: { type: Array, required: true },
+  },
   module6: { type: String, required: true },
-  information6: { type: String },
+  information6: {
+    lessons: { type: Array, required: true },
+    classes: { type: Array, required: true },
+  },
   module7: { type: String, required: true },
-  information7: { type: String },
+  information7: {
+    lessons: { type: Array, required: true },
+    classes: { type: Array, required: true },
+  },
   module8: { type: String, required: true },
-  information8: { type: String },
+  information8: {
+    lessons: { type: Array, required: true },
+    classes: { type: Array, required: true },
+  },
   number: { type: Number, required: true },
 });
 

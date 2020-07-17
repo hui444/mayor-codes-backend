@@ -6,6 +6,8 @@ const ModuleSetFive = require("../models/ModuleSetFive");
 const ModuleSetSix = require("../models/ModuleSetSix");
 const ModuleSetSeven = require("../models/ModuleSetSeven");
 const ModuleSetEight = require("../models/ModuleSetEight");
+const CustomModuleSetFive = require("../models/CustomModuleSetFive");
+const preferredSlot = require("../util/preferredSlot");
 
 const getInputModulesbyId = async (req, res, next) => {
   const setModulesId = req.params.msid;
@@ -38,6 +40,33 @@ const getInputModulesbyId = async (req, res, next) => {
 
 //--------------------------------------------------------------------------
 
+const getTimetableInfobyId = async (req, res, next) => {
+  const timetableId = req.params.tid;
+
+  let timetableInfo;
+  try {
+    timetableInfo = await CustomModuleSetFive.findById(timetableId);
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not find timetable information.",
+      500
+    );
+    return next(error);
+  }
+
+  if (!timetableInfo) {
+    const error = new HttpError(
+      "Could not find timetable information for the provided id.",
+      404
+    );
+    return next(error);
+  }
+
+  res.json({ timetableInfo: timetableInfo.toObject({ getters: true }) });
+};
+
+//--------------------------------------------------------------------------
+
 const createModuleSetFive = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -48,7 +77,7 @@ const createModuleSetFive = async (req, res, next) => {
 
   const { module1, module2, module3, module4, module5 } = req.body;
 
-  console.log(req.body);
+  // console.log(req.body);
   let moduleInformation1;
   try {
     moduleInformation1 = await getInfoForModuleCode(module1.toUpperCase());
@@ -98,12 +127,9 @@ const createModuleSetFive = async (req, res, next) => {
     number: 5,
   });
 
-  console.log(createdModuleSetFive);
-
   try {
     await createdModuleSetFive.save();
   } catch (err) {
-    console.log("something went wrong");
     const error = new HttpError(
       "Creating Module Set failed, please try again.",
       500
@@ -112,7 +138,80 @@ const createModuleSetFive = async (req, res, next) => {
   }
   res.status(201).json({ module: createdModuleSetFive });
 };
+//--------------------------------------------------------------------------
 
+const customiseModuleSetFive = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return next(
+      new HttpError("Invalid inputs passed, please check your data.", 422)
+    );
+  }
+
+  const { mod1Array, mod2Array, mod3Array, mod4Array, mod5Array } = req.body;
+
+  let moduleCustom1;
+  try {
+    moduleCustom1 = await preferredSlot(mod1Array);
+  } catch (error) {
+    return next(error);
+  }
+
+  let moduleCustom2;
+  try {
+    moduleCustom2 = await preferredSlot(mod2Array);
+  } catch (error) {
+    return next(error);
+  }
+
+  let moduleCustom3;
+  try {
+    moduleCustom3 = await preferredSlot(mod3Array);
+  } catch (error) {
+    return next(error);
+  }
+
+  let moduleCustom4;
+  try {
+    moduleCustom4 = await preferredSlot(mod4Array);
+  } catch (error) {
+    return next(error);
+  }
+
+  let moduleCustom5;
+  try {
+    moduleCustom5 = await preferredSlot(mod5Array);
+  } catch (error) {
+    return next(error);
+  }
+
+  const customisedModuleSetFive = new CustomModuleSetFive({
+    module1: moduleCustom1.modCode,
+    information1: moduleCustom1,
+    module2: moduleCustom2.modCode,
+    information2: moduleCustom2,
+    module3: moduleCustom3.modCode,
+    information3: moduleCustom3,
+    module4: moduleCustom4.modCode,
+    information4: moduleCustom4,
+    module5: moduleCustom5.modCode,
+    information5: moduleCustom5,
+    number: 5,
+  });
+
+  try {
+    await customisedModuleSetFive.save();
+  } catch (err) {
+    const error = new HttpError(
+      "Creating customised Module Set failed, please try again.",
+      500
+    );
+    return next(error);
+  }
+
+  console.log(customisedModuleSetFive); //manipulate data
+  res.status(201).json({ customModule: customisedModuleSetFive });
+};
 //--------------------------------------------------------------------------
 
 const createModuleSetSix = async (req, res, next) => {
@@ -407,7 +506,9 @@ const createModuleSetEight = async (req, res, next) => {
 };
 
 exports.getInputModulesbyId = getInputModulesbyId;
+exports.getTimetableInfobyId = getTimetableInfobyId;
 exports.createModuleSetFive = createModuleSetFive;
+exports.customiseModuleSetFive = customiseModuleSetFive;
 exports.createModuleSetSix = createModuleSetSix;
 exports.createModuleSetSeven = createModuleSetSeven;
 exports.createModuleSetEight = createModuleSetEight;

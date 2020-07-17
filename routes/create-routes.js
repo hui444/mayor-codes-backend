@@ -5,6 +5,8 @@ const createControllers = require("../controllers/create-controller");
 
 const router = express.Router();
 
+router.get("/results/:tid", createControllers.getTimetableInfobyId);
+
 router.get("/:msid", createControllers.getInputModulesbyId);
 
 router.post(
@@ -18,6 +20,8 @@ router.post(
   ],
   createControllers.createModuleSetFive
 );
+
+router.post("/fiveCustomised", createControllers.customiseModuleSetFive);
 
 router.post(
   "/six",

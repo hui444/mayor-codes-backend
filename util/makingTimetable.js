@@ -23,22 +23,33 @@ const makingTimetable = (moduleCode, data) => {
     labClassMust = [],
     recClassMust = [];
 
+  var tutInfo = [],
+    lecInfo = [],
+    secInfo = [],
+    labInfo = [],
+    recInfo = [];
+
   while (data[i]) {
     if (!(data[i].day === "Saturday" || data[i].day === "Sunday")) {
       if (data[i].lessonType === "Tutorial") {
         tutorialType[tut] = data[i].classNo;
+        tutInfo[tut] = data[i];
         tut++;
       } else if (data[i].lessonType === "Lecture") {
         lectureType[lec] = data[i].classNo;
+        lecInfo[lec] = data[i];
         lec++;
       } else if (data[i].lessonType === "Sectional Teaching") {
         sectionalType[sec] = data[i].classNo;
+        secInfo[sec] = data[i];
         sec++;
       } else if (data[i].lessonType === "Laboratory") {
         laboratoryType[lab] = data[i].classNo;
+        labInfo[lab] = data[i];
         lab++;
       } else if (data[i].lessonType === "Recitation") {
         recitationType[rec] = data[i].classNo;
+        recInfo[rec] = data[i];
         rec++;
       } else {
         console.log(data[i]);
@@ -109,14 +120,19 @@ const makingTimetable = (moduleCode, data) => {
     lessons,
     classes,
     tutorialType,
+    tutInfo,
     tut,
     lectureType,
+    lecInfo,
     lec,
     sectionalType,
+    secInfo,
     sec,
     laboratoryType,
+    labInfo,
     lab,
     recitationType,
+    recInfo,
     rec,
   };
 };

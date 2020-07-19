@@ -3,7 +3,7 @@ const HttpError = require("../models/http-error");
 const preferredSlot = (data) => {
   var tutSlot, lecSlot, secSlot, labSlot, recSlot, message;
 
-  console.log(data);
+  //   console.log(data);
 
   var modCode = data[0];
   if (data.length === 1) {

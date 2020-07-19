@@ -25,21 +25,20 @@ const makingTimetable = (moduleCode, data) => {
 
   while (data[i]) {
     if (!(data[i].day === "Saturday" || data[i].day === "Sunday")) {
-      //CHECK IF THE CLASSNO ARE THE SAME!!!!!!!!!!
       if (data[i].lessonType === "Tutorial") {
-        tutorialType[tut] = data[i];
+        tutorialType[tut] = data[i].classNo;
         tut++;
       } else if (data[i].lessonType === "Lecture") {
-        lectureType[lec] = data[i];
+        lectureType[lec] = data[i].classNo;
         lec++;
       } else if (data[i].lessonType === "Sectional Teaching") {
-        sectionalType[sec] = data[i];
+        sectionalType[sec] = data[i].classNo;
         sec++;
       } else if (data[i].lessonType === "Laboratory") {
-        laboratoryType[lab] = data[i];
+        laboratoryType[lab] = data[i].classNo;
         lab++;
       } else if (data[i].lessonType === "Recitation") {
-        recitationType[rec] = data[i];
+        recitationType[rec] = data[i].classNo;
         rec++;
       } else {
         console.log(data[i]);
@@ -49,37 +48,51 @@ const makingTimetable = (moduleCode, data) => {
     i++;
   }
 
+  //Remove duplicated classNo
+  tutorialType = Array.from(new Set(tutorialType));
+  lectureType = Array.from(new Set(lectureType));
+  sectionalType = Array.from(new Set(sectionalType));
+  laboratoryType = Array.from(new Set(laboratoryType));
+  recitationType = Array.from(new Set(recitationType));
+
+  //Reset to number of unique classes
+  tut = tutorialType.length;
+  lec = lectureType.length;
+  sec = sectionalType.length;
+  lab = laboratoryType.length;
+  rec = recitationType.length;
+
   if (tut) {
     if (tut === 1) {
-      tutClassMust[0] = moduleCode + " Tutorial " + tutorialType[0].classNo;
+      tutClassMust[0] = moduleCode + " Tutorial " + tutorialType[0];
     }
     ++j;
     lessons[j] = "Tut";
   }
   if (lec) {
     if (lec === 1) {
-      lecClassMust[0] = moduleCode + " Lecture " + lectureType[0].classNo;
+      lecClassMust[0] = moduleCode + " Lecture " + lectureType[0];
     }
     ++j;
     lessons[j] = "Lec";
   }
   if (sec) {
     if (sec === 1) {
-      secClassMust[0] = moduleCode + " Sectional " + sectionalType[0].classNo;
+      secClassMust[0] = moduleCode + " Sectional " + sectionalType[0];
     }
     ++j;
     lessons[j] = "Sec";
   }
   if (lab) {
     if (lab === 1) {
-      labClassMust[0] = moduleCode + " Laboratory " + laboratoryType[0].classNo;
+      labClassMust[0] = moduleCode + " Laboratory " + laboratoryType[0];
     }
     ++j;
     lessons[j] = "Lab";
   }
   if (rec) {
     if (rec === 1) {
-      recClassMust[0] = moduleCode + " Recitation " + recitationType[0].classNo;
+      recClassMust[0] = moduleCode + " Recitation " + recitationType[0];
     }
     ++j;
     lessons[j] = "Rec";

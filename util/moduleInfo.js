@@ -5,7 +5,7 @@ const makingTimetable = require("./makingTimetable");
 
 async function getInfoForModuleCode(moduleCode) {
   const response = await axios.get(
-    `http://api.nusmods.com/v2/2019-2020/modules/${moduleCode}.json`
+    `http://api.nusmods.com/v2/2020-2021/modules/${moduleCode}.json`
   );
 
   const data = response.data;
@@ -18,7 +18,10 @@ async function getInfoForModuleCode(moduleCode) {
     throw error;
   }
 
-  const information = makingTimetable(data.semesterData[0].timetable);
+  const information = makingTimetable(
+    moduleCode,
+    data.semesterData[0].timetable
+  );
 
   return information;
 }

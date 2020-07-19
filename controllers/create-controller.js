@@ -198,7 +198,7 @@ const customiseModuleSetFive = async (req, res, next) => {
     information5: moduleCustom5,
     number: 5,
   });
-
+  console.log(customisedModuleSetFive); //manipulate data
   try {
     await customisedModuleSetFive.save();
   } catch (err) {
@@ -209,7 +209,6 @@ const customiseModuleSetFive = async (req, res, next) => {
     return next(error);
   }
 
-  console.log(customisedModuleSetFive); //manipulate data
   res.status(201).json({ customModule: customisedModuleSetFive });
 };
 //--------------------------------------------------------------------------

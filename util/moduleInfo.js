@@ -23,6 +23,7 @@ async function getInfoForModuleCode(moduleCode) {
     data.semesterData[0].timetable
   );
 
+  // console.log(information);
   return information;
 }
 

@@ -8,6 +8,7 @@ const ModuleSetSeven = require("../models/ModuleSetSeven");
 const ModuleSetEight = require("../models/ModuleSetEight");
 const CustomModuleSetFive = require("../models/CustomModuleSetFive");
 const preferredSlot = require("../util/preferredSlot");
+const extractInformation = require("../util/extractInformation");
 
 const getInputModulesbyId = async (req, res, next) => {
   const setModulesId = req.params.msid;
@@ -200,7 +201,7 @@ const customiseModuleSetFive = async (req, res, next) => {
   });
 
   // console.log(customisedModuleSetFive); //manipulate data
-
+  extractInformation(customisedModuleSetFive);
   try {
     await customisedModuleSetFive.save();
   } catch (err) {

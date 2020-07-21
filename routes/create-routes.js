@@ -36,6 +36,8 @@ router.post(
   createControllers.createModuleSetSix
 );
 
+router.post("/sixCustomised", createControllers.customiseModuleSetSix);
+
 router.post(
   "/seven",
   [

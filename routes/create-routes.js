@@ -52,6 +52,8 @@ router.post(
   createControllers.createModuleSetSeven
 );
 
+router.post("/sevenCustomised", createControllers.customiseModuleSetSeven);
+
 router.post(
   "/eight",
   [

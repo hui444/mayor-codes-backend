@@ -10,6 +10,7 @@ const CustomModuleSetFive = require("../models/CustomModuleSetFive");
 const preferredSlot = require("../util/preferredSlot");
 const extractInformation = require("../util/extractInformation");
 const CustomModuleSetSix = require("../models/CustomModuleSetSix");
+const CustomModuleSetSeven = require("../models/CustomModuleSetSeven");
 
 const getInputModulesbyId = async (req, res, next) => {
   const setModulesId = req.params.msid;
@@ -49,7 +50,8 @@ const getTimetableInfobyId = async (req, res, next) => {
   try {
     timetableInfo =
       (await CustomModuleSetFive.findById(timetableId)) ||
-      (await CustomModuleSetSix.findById(timetableId));
+      (await CustomModuleSetSix.findById(timetableId)) ||
+      (await CustomModuleSetSeven.findById(timetableId));
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not find timetable information.",
@@ -205,7 +207,7 @@ const customiseModuleSetFive = async (req, res, next) => {
 
   // console.log(customisedModuleSetFive); //manipulate data
   extractInformation(customisedModuleSetFive);
-  
+
   try {
     await customisedModuleSetFive.save();
   } catch (err) {
@@ -496,6 +498,117 @@ const createModuleSetSeven = async (req, res, next) => {
 
 //--------------------------------------------------------------------------
 
+const customiseModuleSetSeven = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return next(
+      new HttpError("Invalid inputs passed, please check your data.", 422)
+    );
+  }
+
+  const {
+    mod1Array,
+    mod2Array,
+    mod3Array,
+    mod4Array,
+    mod5Array,
+    mod6Array,
+    mod7Array,
+  } = req.body;
+
+  console.log(
+    mod1Array,
+    mod2Array,
+    mod3Array,
+    mod4Array,
+    mod5Array,
+    mod6Array,
+    mod7Array
+  );
+  let moduleCustom1;
+  try {
+    moduleCustom1 = await preferredSlot(mod1Array);
+  } catch (error) {
+    return next(error);
+  }
+
+  let moduleCustom2;
+  try {
+    moduleCustom2 = await preferredSlot(mod2Array);
+  } catch (error) {
+    return next(error);
+  }
+
+  let moduleCustom3;
+  try {
+    moduleCustom3 = await preferredSlot(mod3Array);
+  } catch (error) {
+    return next(error);
+  }
+
+  let moduleCustom4;
+  try {
+    moduleCustom4 = await preferredSlot(mod4Array);
+  } catch (error) {
+    return next(error);
+  }
+
+  let moduleCustom5;
+  try {
+    moduleCustom5 = await preferredSlot(mod5Array);
+  } catch (error) {
+    return next(error);
+  }
+
+  let moduleCustom6;
+  try {
+    moduleCustom6 = await preferredSlot(mod6Array);
+  } catch (error) {
+    return next(error);
+  }
+
+  let moduleCustom7;
+  try {
+    moduleCustom7 = await preferredSlot(mod7Array);
+  } catch (error) {
+    return next(error);
+  }
+
+  const customisedModuleSetSeven = new CustomModuleSetSeven({
+    module1: moduleCustom1.modCode,
+    information1: moduleCustom1,
+    module2: moduleCustom2.modCode,
+    information2: moduleCustom2,
+    module3: moduleCustom3.modCode,
+    information3: moduleCustom3,
+    module4: moduleCustom4.modCode,
+    information4: moduleCustom4,
+    module5: moduleCustom5.modCode,
+    information5: moduleCustom5,
+    module6: moduleCustom6.modCode,
+    information6: moduleCustom6,
+    module7: moduleCustom7.modCode,
+    information7: moduleCustom7,
+    number: 7,
+  });
+
+  // console.log(customisedModuleSetSeven); //manipulate data
+  // extractInformation(customisedModuleSetSeven);
+  try {
+    await customisedModuleSetSeven.save();
+  } catch (err) {
+    const error = new HttpError(
+      "Creating customised Module Set failed, please try again.",
+      500
+    );
+    return next(error);
+  }
+
+  res.status(201).json({ customModule: customisedModuleSetSeven });
+};
+
+//--------------------------------------------------------------------------
+
 const createModuleSetEight = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -611,4 +724,5 @@ exports.customiseModuleSetFive = customiseModuleSetFive;
 exports.createModuleSetSix = createModuleSetSix;
 exports.customiseModuleSetSix = customiseModuleSetSix;
 exports.createModuleSetSeven = createModuleSetSeven;
+exports.customiseModuleSetSeven = customiseModuleSetSeven;
 exports.createModuleSetEight = createModuleSetEight;

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const moduleSetSixSchema = new Schema({
+const customModuleSetSix = new Schema({
   module1: { type: String, required: true },
   information1: { type: Object, required: true },
   module2: { type: String, required: true },
@@ -18,4 +18,4 @@ const moduleSetSixSchema = new Schema({
   number: { type: Number, required: true },
 });
 
-module.exports = mongoose.model("ModuleSetSix", moduleSetSixSchema);
+module.exports = mongoose.model("CustomModuleSetSix", customModuleSetSix);

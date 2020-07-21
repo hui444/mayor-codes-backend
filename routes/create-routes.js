@@ -69,4 +69,6 @@ router.post(
   createControllers.createModuleSetEight
 );
 
+router.post("/eightCustomised", createControllers.customiseModuleSetEight);
+
 module.exports = router;

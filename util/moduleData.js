@@ -1,5 +1,10 @@
 const moduleData = (information, classInfo) => {
-  var tutDetails, lecDetails, secDetails, labDetails, recDetails;
+  var modCode = information.modCode,
+    tutDetails,
+    lecDetails,
+    secDetails,
+    labDetails,
+    recDetails;
 
   if (information.tutSlot) {
     if (information.tutSlot === "Choose") {
@@ -61,7 +66,14 @@ const moduleData = (information, classInfo) => {
     recDetails = null;
   }
 
-  return { tutDetails, lecDetails, secDetails, labDetails, recDetails };
+  return {
+    modCode,
+    tutDetails,
+    lecDetails,
+    secDetails,
+    labDetails,
+    recDetails,
+  };
 };
 
 module.exports = moduleData;

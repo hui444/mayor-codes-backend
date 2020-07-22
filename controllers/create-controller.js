@@ -12,6 +12,7 @@ const extractInformation = require("../util/extractInformation");
 const CustomModuleSetSix = require("../models/CustomModuleSetSix");
 const CustomModuleSetSeven = require("../models/CustomModuleSetSeven");
 const CustomModuleSetEight = require("../models/CustomModuleSetEight");
+const algorithm = require("../util/algorithm");
 
 const getInputModulesbyId = async (req, res, next) => {
   const setModulesId = req.params.msid;
@@ -207,8 +208,10 @@ const customiseModuleSetFive = async (req, res, next) => {
     number: 5,
   });
 
-  extractInformation(customisedModuleSetFive);
+  var extractedData = await extractInformation(customisedModuleSetFive);
 
+  algorithm(extractedData);
+  // console.log(extractedData.extractedData1);
   try {
     await customisedModuleSetFive.save();
   } catch (err) {
@@ -382,7 +385,7 @@ const customiseModuleSetSix = async (req, res, next) => {
     number: 6,
   });
 
-  extractInformation(customisedModuleSetSix);
+  var extractedData = await extractInformation(customisedModuleSetSix);
 
   try {
     await customisedModuleSetSix.save();
@@ -584,7 +587,7 @@ const customiseModuleSetSeven = async (req, res, next) => {
     number: 7,
   });
 
-  extractInformation(customisedModuleSetSeven);
+  var extractedData = await extractInformation(customisedModuleSetSeven);
 
   try {
     await customisedModuleSetSeven.save();
@@ -805,7 +808,7 @@ const customiseModuleSetEight = async (req, res, next) => {
     number: 8,
   });
 
-  extractInformation(customisedModuleSetEight);
+  var extractedData = await extractInformation(customisedModuleSetEight);
 
   try {
     await customisedModuleSetEight.save();

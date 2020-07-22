@@ -207,7 +207,6 @@ const customiseModuleSetFive = async (req, res, next) => {
     number: 5,
   });
 
-  // console.log(customisedModuleSetFive); //manipulate data
   extractInformation(customisedModuleSetFive);
 
   try {
@@ -383,8 +382,8 @@ const customiseModuleSetSix = async (req, res, next) => {
     number: 6,
   });
 
-  // console.log(customisedModuleSetSix); //manipulate data
-  // extractInformation(customisedModuleSetSix);
+  extractInformation(customisedModuleSetSix);
+
   try {
     await customisedModuleSetSix.save();
   } catch (err) {
@@ -585,8 +584,8 @@ const customiseModuleSetSeven = async (req, res, next) => {
     number: 7,
   });
 
-  // console.log(customisedModuleSetSeven); //manipulate data
-  // extractInformation(customisedModuleSetSeven);
+  extractInformation(customisedModuleSetSeven);
+
   try {
     await customisedModuleSetSeven.save();
   } catch (err) {
@@ -806,8 +805,8 @@ const customiseModuleSetEight = async (req, res, next) => {
     number: 8,
   });
 
-  // console.log(customisedModuleSetEight); //manipulate data
-  // extractInformation(customisedModuleSetEight);
+  extractInformation(customisedModuleSetEight);
+
   try {
     await customisedModuleSetEight.save();
   } catch (err) {

@@ -1,7 +1,12 @@
 const deleteTime = require("./deleteTime");
 const whichDay = require("./whichDay");
 
-const algo_part = async (classDetails, classInfo, NEW_week_arr, week_arr) => {
+const algo_partOne = async (
+  classDetails,
+  classInfo,
+  NEW_week_arr,
+  week_arr
+) => {
   let bool = true,
     j = 0,
     classSlot;
@@ -13,16 +18,15 @@ const algo_part = async (classDetails, classInfo, NEW_week_arr, week_arr) => {
           classDetails = classInfo.filter((x) => {
             return x.classNo === classInfo[j].classNo;
           });
-          console.log("/--------------------------------------");
-          console.log(classDetails);
-          console.log("--------------------------------------/");
+
           NEW_week_arr = deleteTime(
             week_arr,
             whichDay(classDetails[i]),
             classDetails[i],
             true
           );
-          if (NEW_week_arr) {
+          // console.log(classDetails.length);
+          if (NEW_week_arr && i === classDetails.length - 1) {
             // console.log(classDetails);
             week_arr = NEW_week_arr;
             classSlot = classDetails[i];
@@ -59,4 +63,4 @@ const algo_part = async (classDetails, classInfo, NEW_week_arr, week_arr) => {
   return { week_arr, classSlot };
 };
 
-module.exports = algo_part;
+module.exports = algo_partOne;

@@ -1,10 +1,16 @@
 const deleteTime = require("./deleteTime");
 const whichDay = require("./whichDay");
 const getInfoForModuleCode = require("./moduleInfo");
-const algo_part = require("./algo_part");
+const algo_partOne = require("./algo_partOne");
+const algo_partTwo = require("./algo_partTwo");
 
 const algorithm = async (data) => {
-  var tutSlot, lecSlot, secSlot, labSlot, recSlot, message;
+  var tutSlot = null,
+    lecSlot = null,
+    secSlot = null,
+    labSlot = null,
+    recSlot = null,
+    message;
 
   var mon = [
       0800,
@@ -89,31 +95,30 @@ const algorithm = async (data) => {
 
   var week_arr = [mon, tue, wed, thu, fri],
     NEW_week_arr;
+  var mod1Result, mod2Result, mod3Result, mod4Result, mod5Result;
+  var mod1Slots, mod2Slots, mod3Slots, mod4Slots, mod5Slots;
   //mod1 takes priority
 
   console.log(data.extractedData1);
-  var tutdata1 = await algo_part(
-    data.extractedData1.tutDetails,
-    (await getInfoForModuleCode(data.extractedData1.modCode)).tutInfo,
-    NEW_week_arr,
-    week_arr
-  );
-  week_arr = tutdata1.week_arr;
-  tutSlot = tutdata1.classSlot.classNo;
+  mod1Result = await algo_partTwo(data.extractedData1, NEW_week_arr, week_arr);
+  week_arr = mod1Result.week_arr;
+  mod2Result = await algo_partTwo(data.extractedData2, NEW_week_arr, week_arr);
+  week_arr = mod2Result.week_arr;
+  mod3Result = await algo_partTwo(data.extractedData3, NEW_week_arr, week_arr);
+  week_arr = mod3Result.week_arr;
+  mod4Result = await algo_partTwo(data.extractedData4, NEW_week_arr, week_arr);
+  week_arr = mod4Result.week_arr;
+  mod5Result = await algo_partTwo(data.extractedData5, NEW_week_arr, week_arr);
+  week_arr = mod5Result.week_arr;
 
-  var labdata1 = await algo_part(
-    data.extractedData1.labDetails,
-    (await getInfoForModuleCode(data.extractedData1.modCode)).labInfo,
-    NEW_week_arr,
-    week_arr
-  );
-  week_arr = labdata1.week_arr;
-  labSlot = labdata1.classSlot.classNo;
-  //   console.log(tutSlot);
-  console.log(week_arr);
+  //   console.log(week_arr);
+  mod1Slots = mod1Result.modSlots;
+  mod2Slots = mod2Result.modSlots;
+  mod3Slots = mod3Result.modSlots;
+  mod4Slots = mod4Result.modSlots;
+  mod5Slots = mod5Result.modSlots;
 
-  var mod1Results = { tutSlot, lecSlot, secSlot, labSlot, recSlot };
-  return { mod1Results };
+  return { mod1Slots, mod2Slots, mod3Slots, mod4Slots, mod5Slots };
 };
 
 module.exports = algorithm;

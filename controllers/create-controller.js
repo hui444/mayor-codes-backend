@@ -216,15 +216,15 @@ const customiseModuleSetFive = async (req, res, next) => {
 
   customisedModuleSetFive = new CustomModuleSetFive({
     module1: moduleCustom1.modCode,
-    information1: algoResults.mod1Results,
+    information1: algoResults.mod1Slots,
     module2: moduleCustom2.modCode,
-    information2: moduleCustom2,
+    information2: algoResults.mod2Slots,
     module3: moduleCustom3.modCode,
-    information3: moduleCustom3,
+    information3: algoResults.mod3Slots,
     module4: moduleCustom4.modCode,
-    information4: moduleCustom4,
+    information4: algoResults.mod4Slots,
     module5: moduleCustom5.modCode,
-    information5: moduleCustom5,
+    information5: algoResults.mod5Slots,
     number: 5,
   });
   // console.log(extractedData.extractedData1);

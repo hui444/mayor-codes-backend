@@ -194,7 +194,7 @@ const customiseModuleSetFive = async (req, res, next) => {
     return next(error);
   }
 
-  const customisedModuleSetFive = new CustomModuleSetFive({
+  var customisedModuleSetFive = new CustomModuleSetFive({
     module1: moduleCustom1.modCode,
     information1: moduleCustom1,
     module2: moduleCustom2.modCode,
@@ -210,7 +210,23 @@ const customiseModuleSetFive = async (req, res, next) => {
 
   var extractedData = await extractInformation(customisedModuleSetFive);
 
-  algorithm(extractedData);
+  // console.log(await algorithm(extractedData));
+
+  var algoResults = await algorithm(extractedData);
+
+  customisedModuleSetFive = new CustomModuleSetFive({
+    module1: moduleCustom1.modCode,
+    information1: algoResults.mod1Results,
+    module2: moduleCustom2.modCode,
+    information2: moduleCustom2,
+    module3: moduleCustom3.modCode,
+    information3: moduleCustom3,
+    module4: moduleCustom4.modCode,
+    information4: moduleCustom4,
+    module5: moduleCustom5.modCode,
+    information5: moduleCustom5,
+    number: 5,
+  });
   // console.log(extractedData.extractedData1);
   try {
     await customisedModuleSetFive.save();

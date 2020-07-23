@@ -1,8 +1,11 @@
 const deleteTime = require("./deleteTime");
 const whichDay = require("./whichDay");
 const getInfoForModuleCode = require("./moduleInfo");
+const algo_part = require("./algo_part");
 
 const algorithm = async (data) => {
+  var tutSlot, lecSlot, secSlot, labSlot, recSlot, message;
+
   var mon = [
       0800,
       0900,
@@ -88,43 +91,29 @@ const algorithm = async (data) => {
     NEW_week_arr;
   //mod1 takes priority
 
-  let j = 0;
-  let bool = true;
+  console.log(data.extractedData1);
+  var tutdata1 = await algo_part(
+    data.extractedData1.tutDetails,
+    (await getInfoForModuleCode(data.extractedData1.modCode)).tutInfo,
+    NEW_week_arr,
+    week_arr
+  );
+  week_arr = tutdata1.week_arr;
+  tutSlot = tutdata1.classSlot.classNo;
 
-  console.log(data.extractedData1.tutDetails);
-  if (data.extractedData1.tutDetails) {
-    for (let i = 0; i < data.extractedData1.tutDetails.length; i++) {
-      if (data.extractedData1.tutDetails === "Choose") {
-        while (bool) {
-          data.extractedData1.tutDetails = [
-            (await getInfoForModuleCode(data.extractedData1.modCode)).tutInfo[
-              j
-            ],
-          ];
-          console.log(data.extractedData1.tutDetails[i]);
-          NEW_week_arr = deleteTime(
-            week_arr,
-            whichDay(data.extractedData1.tutDetails[i]),
-            data.extractedData1.tutDetails[i],
-            true
-          );
-          if (NEW_week_arr) {
-            week_arr = NEW_week_arr;
-            bool = false;
-          } else j++;
-        }
-      } else {
-        //did not check clashes in preferred slots
-        week_arr = deleteTime(
-          week_arr,
-          whichDay(data.extractedData1.tutDetails[i]),
-          data.extractedData1.tutDetails[i],
-          false
-        );
-      }
-    }
-  }
+  var labdata1 = await algo_part(
+    data.extractedData1.labDetails,
+    (await getInfoForModuleCode(data.extractedData1.modCode)).labInfo,
+    NEW_week_arr,
+    week_arr
+  );
+  week_arr = labdata1.week_arr;
+  labSlot = labdata1.classSlot.classNo;
+  //   console.log(tutSlot);
   console.log(week_arr);
+
+  var mod1Results = { tutSlot, lecSlot, secSlot, labSlot, recSlot };
+  return { mod1Results };
 };
 
 module.exports = algorithm;

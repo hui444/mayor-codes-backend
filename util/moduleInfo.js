@@ -15,7 +15,7 @@ async function getInfoForModuleCode(moduleCode) {
       "Could not find module information for the specified module code.",
       422
     );
-    throw error;
+    return next(error);
   }
 
   const information = makingTimetable(

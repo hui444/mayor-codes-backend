@@ -17,6 +17,7 @@ const moduleSetSevenSchema = new Schema({
   information6: { type: Object, required: true },
   module7: { type: String, required: true },
   information7: { type: Object, required: true },
+  ranking: { type: Boolean, required: true },
   number: { type: Number, required: true },
 });
 

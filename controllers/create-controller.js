@@ -84,7 +84,7 @@ const createModuleSetFive = async (req, res, next) => {
     );
   }
 
-  const { module1, module2, module3, module4, module5 } = req.body;
+  const { module1, module2, module3, module4, module5, ranking } = req.body;
 
   let moduleInformation1;
   try {
@@ -132,6 +132,7 @@ const createModuleSetFive = async (req, res, next) => {
     information4: moduleInformation4,
     module5: module5.toUpperCase(),
     information5: moduleInformation5,
+    ranking: ranking,
     number: 5,
   });
 
@@ -157,7 +158,14 @@ const customiseModuleSetFive = async (req, res, next) => {
     );
   }
 
-  const { mod1Array, mod2Array, mod3Array, mod4Array, mod5Array } = req.body;
+  const {
+    mod1Array,
+    mod2Array,
+    mod3Array,
+    mod4Array,
+    mod5Array,
+    ranking,
+  } = req.body;
 
   let moduleCustom1;
   try {
@@ -212,7 +220,13 @@ const customiseModuleSetFive = async (req, res, next) => {
 
   // console.log(await algorithm(extractedData));
 
-  var algoResults = await algorithm(extractedData);
+  // let algoResults;
+  // try {
+  var algoResults = await algorithm(extractedData, ranking);
+  // } catch (error) {
+  //   console.log(error);
+  //   return next(error);
+  // }
 
   customisedModuleSetFive = new CustomModuleSetFive({
     module1: moduleCustom1.modCode,
@@ -225,6 +239,7 @@ const customiseModuleSetFive = async (req, res, next) => {
     information4: algoResults.mod4Slots,
     module5: moduleCustom5.modCode,
     information5: algoResults.mod5Slots,
+    clashes: algoResults.err,
     number: 5,
   });
   // console.log(extractedData.extractedData1);
@@ -251,7 +266,15 @@ const createModuleSetSix = async (req, res, next) => {
     );
   }
 
-  const { module1, module2, module3, module4, module5, module6 } = req.body;
+  const {
+    module1,
+    module2,
+    module3,
+    module4,
+    module5,
+    module6,
+    ranking,
+  } = req.body;
 
   let moduleInformation1;
   try {
@@ -308,6 +331,7 @@ const createModuleSetSix = async (req, res, next) => {
     information5: moduleInformation5,
     module6: module6.toUpperCase(),
     information6: moduleInformation6,
+    ranking: ranking,
     number: 6,
   });
 
@@ -341,6 +365,7 @@ const customiseModuleSetSix = async (req, res, next) => {
     mod4Array,
     mod5Array,
     mod6Array,
+    ranking,
   } = req.body;
 
   let moduleCustom1;
@@ -434,6 +459,7 @@ const createModuleSetSeven = async (req, res, next) => {
     module5,
     module6,
     module7,
+    ranking,
   } = req.body;
 
   let moduleInformation1;
@@ -500,6 +526,7 @@ const createModuleSetSeven = async (req, res, next) => {
     information6: moduleInformation6,
     module7: module7.toUpperCase(),
     information7: moduleInformation7,
+    ranking: ranking,
     number: 7,
   });
 
@@ -534,6 +561,7 @@ const customiseModuleSetSeven = async (req, res, next) => {
     mod5Array,
     mod6Array,
     mod7Array,
+    ranking,
   } = req.body;
 
   let moduleCustom1;
@@ -637,6 +665,7 @@ const createModuleSetEight = async (req, res, next) => {
     module6,
     module7,
     module8,
+    ranking,
   } = req.body;
 
   let moduleInformation1;
@@ -712,6 +741,7 @@ const createModuleSetEight = async (req, res, next) => {
     information7: moduleInformation7,
     module8: module8.toUpperCase(),
     information8: moduleInformation8,
+    ranking: ranking,
     number: 8,
   });
 
@@ -746,6 +776,7 @@ const customiseModuleSetEight = async (req, res, next) => {
     mod6Array,
     mod7Array,
     mod8Array,
+    ranking,
   } = req.body;
 
   let moduleCustom1;

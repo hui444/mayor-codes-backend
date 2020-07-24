@@ -1,18 +1,19 @@
 const algo_partOne = require("./algo_partOne");
 const getInfoForModuleCode = require("./moduleInfo");
 
-const algo_partTwo = async (extractedData, NEW_week_arr, week_arr) => {
+const algo_partTwo = async (modCode, extractedData, NEW_week_arr, week_arr) => {
   var tutSlot = null,
     lecSlot = null,
     secSlot = null,
     labSlot = null,
     recSlot = null,
     message,
-    modSlots;
+    modSlots,
+    error = false;
 
   if (extractedData.message) {
     message = extractedData.message;
-    modSlots = { message };
+    modSlots = { modCode, message };
   } else {
     if (extractedData.tutDetails) {
       var tutdata = await algo_partOne(
@@ -23,6 +24,7 @@ const algo_partTwo = async (extractedData, NEW_week_arr, week_arr) => {
       );
       week_arr = tutdata.week_arr;
       tutSlot = tutdata.classSlot.classNo;
+      error = error || tutdata.error;
     }
 
     if (extractedData.lecDetails) {
@@ -34,6 +36,7 @@ const algo_partTwo = async (extractedData, NEW_week_arr, week_arr) => {
       );
       week_arr = lecdata.week_arr;
       lecSlot = lecdata.classSlot.classNo;
+      error = error || lecdata.error;
     }
 
     if (extractedData.labDetails) {
@@ -45,6 +48,7 @@ const algo_partTwo = async (extractedData, NEW_week_arr, week_arr) => {
       );
       week_arr = labdata.week_arr;
       labSlot = labdata.classSlot.classNo;
+      error = error || labdata.error;
     }
 
     if (extractedData.secDetails) {
@@ -56,6 +60,7 @@ const algo_partTwo = async (extractedData, NEW_week_arr, week_arr) => {
       );
       week_arr = secdata.week_arr;
       secSlot = secdata.classSlot.classNo;
+      error = error || secdata.error;
     }
 
     if (extractedData.recDetails) {
@@ -67,13 +72,14 @@ const algo_partTwo = async (extractedData, NEW_week_arr, week_arr) => {
       );
       week_arr = recdata.week_arr;
       recSlot = recdata.classSlot.classNo;
+      error = error || recdata.error;
     }
 
-    modSlots = { tutSlot, lecSlot, secSlot, labSlot, recSlot };
+    modSlots = { modCode, tutSlot, lecSlot, secSlot, labSlot, recSlot };
   }
 
-  //   console.log(modSlots);
-  return { modSlots, week_arr };
+  console.log(modCode + error);
+  return { modSlots, week_arr, error };
 };
 
 module.exports = algo_partTwo;

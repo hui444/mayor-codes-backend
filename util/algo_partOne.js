@@ -9,7 +9,8 @@ const algo_partOne = async (
 ) => {
   let bool = true,
     j = 0,
-    classSlot;
+    classSlot,
+    error = false;
   if (classDetails) {
     for (let i = 0; i < classDetails.length; i++) {
       if (classDetails === "Choose") {
@@ -34,6 +35,7 @@ const algo_partOne = async (
           } else j++;
 
           if (j >= classInfo.length) {
+            error = true;
             console.log("help");
             classDetails = [classInfo[0]];
             console.log(classDetails);
@@ -44,6 +46,7 @@ const algo_partOne = async (
               false
             );
             classSlot = classDetails[i];
+            console.log(classSlot);
             break;
           }
         }
@@ -60,7 +63,7 @@ const algo_partOne = async (
     }
   }
   //   console.log(classSlot);
-  return { week_arr, classSlot };
+  return { week_arr, classSlot, error };
 };
 
 module.exports = algo_partOne;

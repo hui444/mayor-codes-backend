@@ -97,7 +97,7 @@ const extractInformation = async (data) => {
     }
   }
 
-  /* extractedData contains tutDetails, lecDetails, secDetails, labDetails and recDetails
+  /* extractedData contains modCode, tutDetails, lecDetails, secDetails, labDetails and recDetails
   1. information for selected slots
   2. "Choose" for non selected slots
   3. null for classtypes that do not exist */

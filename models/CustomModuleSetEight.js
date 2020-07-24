@@ -19,6 +19,7 @@ const customModuleSetEight = new Schema({
   information7: { type: Object, required: true },
   module8: { type: String, required: true },
   information8: { type: Object, required: true },
+  clashes: { type: Boolean, required: true },
   number: { type: Number, required: true },
 });
 

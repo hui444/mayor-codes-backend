@@ -1,4 +1,4 @@
-const algo_partSix = require("./algo_partSix");
+const algo_partOne = require("./algo_partOne");
 const getInfoForModuleCode = require("./moduleInfo");
 
 const algo_partTwo = async (modCode, extractedData, week_arr) => {
@@ -16,7 +16,7 @@ const algo_partTwo = async (modCode, extractedData, week_arr) => {
   } else {
     if (extractedData.tutDetails) {
       var modCodeInfo = await getInfoForModuleCode(extractedData.modCode);
-      var tutdata = await algo_partSix(
+      var tutdata = await algo_partOne(
         extractedData.tutDetails,
         modCodeInfo.tutInfo,
         modCodeInfo.tutorialType,
@@ -30,7 +30,7 @@ const algo_partTwo = async (modCode, extractedData, week_arr) => {
 
     if (extractedData.lecDetails) {
       var modCodeInfo = await getInfoForModuleCode(extractedData.modCode);
-      var lecdata = await algo_partSix(
+      var lecdata = await algo_partOne(
         extractedData.lecDetails,
         modCodeInfo.lecInfo,
         modCodeInfo.lectureType,
@@ -44,7 +44,7 @@ const algo_partTwo = async (modCode, extractedData, week_arr) => {
 
     if (extractedData.labDetails) {
       var modCodeInfo = await getInfoForModuleCode(extractedData.modCode);
-      var labdata = await algo_partSix(
+      var labdata = await algo_partOne(
         extractedData.labDetails,
         modCodeInfo.labInfo,
         modCodeInfo.laboratoryType,
@@ -58,7 +58,7 @@ const algo_partTwo = async (modCode, extractedData, week_arr) => {
 
     if (extractedData.secDetails) {
       var modCodeInfo = await getInfoForModuleCode(extractedData.modCode);
-      var secdata = await algo_partSix(
+      var secdata = await algo_partOne(
         extractedData.secDetails,
         modCodeInfo.secInfo,
         modCodeInfo.sectionalType,
@@ -72,7 +72,7 @@ const algo_partTwo = async (modCode, extractedData, week_arr) => {
 
     if (extractedData.recDetails) {
       var modCodeInfo = await getInfoForModuleCode(extractedData.modCode);
-      var recdata = await algo_partSix(
+      var recdata = await algo_partOne(
         extractedData.recDetails,
         modCodeInfo.recInfo,
         modCodeInfo.recitationType,

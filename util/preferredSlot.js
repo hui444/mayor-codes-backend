@@ -6,6 +6,7 @@ const preferredSlot = (data) => {
   //   console.log(data);
   var modCode = data[0];
   if (data.length === 1) {
+    // console.log(data);
     message = "No information available";
     return { modCode, message };
   } else {

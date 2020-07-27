@@ -1,7 +1,7 @@
-const algo_partOne = require("./algo_partOne");
+const algo_partSix = require("./algo_partSix");
 const getInfoForModuleCode = require("./moduleInfo");
 
-const algo_partTwo = async (modCode, extractedData, NEW_week_arr, week_arr) => {
+const algo_partTwo = async (modCode, extractedData, week_arr) => {
   var tutSlot = null,
     lecSlot = null,
     secSlot = null,
@@ -10,16 +10,17 @@ const algo_partTwo = async (modCode, extractedData, NEW_week_arr, week_arr) => {
     message,
     modSlots,
     error = false;
-
   if (extractedData.message) {
     message = extractedData.message;
     modSlots = { modCode, message };
   } else {
     if (extractedData.tutDetails) {
-      var tutdata = await algo_partOne(
+      var modCodeInfo = await getInfoForModuleCode(extractedData.modCode);
+      var tutdata = await algo_partSix(
         extractedData.tutDetails,
-        (await getInfoForModuleCode(extractedData.modCode)).tutInfo,
-        NEW_week_arr,
+        modCodeInfo.tutInfo,
+        modCodeInfo.tutorialType,
+        modCodeInfo.tut,
         week_arr
       );
       week_arr = tutdata.week_arr;
@@ -28,10 +29,12 @@ const algo_partTwo = async (modCode, extractedData, NEW_week_arr, week_arr) => {
     }
 
     if (extractedData.lecDetails) {
-      var lecdata = await algo_partOne(
+      var modCodeInfo = await getInfoForModuleCode(extractedData.modCode);
+      var lecdata = await algo_partSix(
         extractedData.lecDetails,
-        (await getInfoForModuleCode(extractedData.modCode)).lecInfo,
-        NEW_week_arr,
+        modCodeInfo.lecInfo,
+        modCodeInfo.lectureType,
+        modCodeInfo.lec,
         week_arr
       );
       week_arr = lecdata.week_arr;
@@ -40,10 +43,12 @@ const algo_partTwo = async (modCode, extractedData, NEW_week_arr, week_arr) => {
     }
 
     if (extractedData.labDetails) {
-      var labdata = await algo_partOne(
+      var modCodeInfo = await getInfoForModuleCode(extractedData.modCode);
+      var labdata = await algo_partSix(
         extractedData.labDetails,
-        (await getInfoForModuleCode(extractedData.modCode)).labInfo,
-        NEW_week_arr,
+        modCodeInfo.labInfo,
+        modCodeInfo.laboratoryType,
+        modCodeInfo.lab,
         week_arr
       );
       week_arr = labdata.week_arr;
@@ -52,10 +57,12 @@ const algo_partTwo = async (modCode, extractedData, NEW_week_arr, week_arr) => {
     }
 
     if (extractedData.secDetails) {
-      var secdata = await algo_partOne(
+      var modCodeInfo = await getInfoForModuleCode(extractedData.modCode);
+      var secdata = await algo_partSix(
         extractedData.secDetails,
-        (await getInfoForModuleCode(extractedData.modCode)).secInfo,
-        NEW_week_arr,
+        modCodeInfo.secInfo,
+        modCodeInfo.sectionalType,
+        modCodeInfo.sec,
         week_arr
       );
       week_arr = secdata.week_arr;
@@ -64,10 +71,12 @@ const algo_partTwo = async (modCode, extractedData, NEW_week_arr, week_arr) => {
     }
 
     if (extractedData.recDetails) {
-      var recdata = await algo_partOne(
+      var modCodeInfo = await getInfoForModuleCode(extractedData.modCode);
+      var recdata = await algo_partSix(
         extractedData.recDetails,
-        (await getInfoForModuleCode(extractedData.modCode)).recInfo,
-        NEW_week_arr,
+        modCodeInfo.recInfo,
+        modCodeInfo.recitationType,
+        modCodeInfo.rec,
         week_arr
       );
       week_arr = recdata.week_arr;

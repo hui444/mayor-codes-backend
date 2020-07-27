@@ -25,7 +25,6 @@ const moduleSetFiveSchema = new Schema({
   information4: { type: Object, required: true },
   module5: { type: String, required: true },
   information5: { type: Object, required: true },
-  ranking: { type: Boolean, required: true },
   number: { type: Number, required: true },
 });
 

@@ -12,6 +12,7 @@ const extractInformation = require("../util/extractInformation");
 const CustomModuleSetSix = require("../models/CustomModuleSetSix");
 const CustomModuleSetSeven = require("../models/CustomModuleSetSeven");
 const CustomModuleSetEight = require("../models/CustomModuleSetEight");
+const algorithm = require("../util/algorithm");
 
 const getInputModulesbyId = async (req, res, next) => {
   const setModulesId = req.params.msid;
@@ -193,7 +194,7 @@ const customiseModuleSetFive = async (req, res, next) => {
     return next(error);
   }
 
-  const customisedModuleSetFive = new CustomModuleSetFive({
+  var customisedModuleSetFive = new CustomModuleSetFive({
     module1: moduleCustom1.modCode,
     information1: moduleCustom1,
     module2: moduleCustom2.modCode,
@@ -207,8 +208,36 @@ const customiseModuleSetFive = async (req, res, next) => {
     number: 5,
   });
 
-  extractInformation(customisedModuleSetFive);
+  let extractedData;
+  try {
+    extractedData = await extractInformation(customisedModuleSetFive);
+  } catch (error) {
+    return next(error);
+  }
 
+  let algoResults;
+  try {
+    algoResults = await algorithm(extractedData, 5);
+  } catch (error) {
+    console.log(error);
+    return next(error);
+  }
+
+  customisedModuleSetFive = new CustomModuleSetFive({
+    module1: moduleCustom1.modCode,
+    information1: algoResults.mod1Slots,
+    module2: moduleCustom2.modCode,
+    information2: algoResults.mod2Slots,
+    module3: moduleCustom3.modCode,
+    information3: algoResults.mod3Slots,
+    module4: moduleCustom4.modCode,
+    information4: algoResults.mod4Slots,
+    module5: moduleCustom5.modCode,
+    information5: algoResults.mod5Slots,
+    clashes: algoResults.err,
+    number: 5,
+  });
+  // console.log(extractedData.extractedData1);
   try {
     await customisedModuleSetFive.save();
   } catch (err) {
@@ -289,6 +318,7 @@ const createModuleSetSix = async (req, res, next) => {
     information5: moduleInformation5,
     module6: module6.toUpperCase(),
     information6: moduleInformation6,
+
     number: 6,
   });
 
@@ -366,7 +396,7 @@ const customiseModuleSetSix = async (req, res, next) => {
     return next(error);
   }
 
-  const customisedModuleSetSix = new CustomModuleSetSix({
+  var customisedModuleSetSix = new CustomModuleSetSix({
     module1: moduleCustom1.modCode,
     information1: moduleCustom1,
     module2: moduleCustom2.modCode,
@@ -382,7 +412,32 @@ const customiseModuleSetSix = async (req, res, next) => {
     number: 6,
   });
 
-  extractInformation(customisedModuleSetSix);
+  var extractedData = await extractInformation(customisedModuleSetSix);
+
+  let algoResults;
+  try {
+    algoResults = await algorithm(extractedData, 6);
+  } catch (error) {
+    console.log(error);
+    return next(error);
+  }
+
+  customisedModuleSetSix = new CustomModuleSetSix({
+    module1: moduleCustom1.modCode,
+    information1: algoResults.mod1Slots,
+    module2: moduleCustom2.modCode,
+    information2: algoResults.mod2Slots,
+    module3: moduleCustom3.modCode,
+    information3: algoResults.mod3Slots,
+    module4: moduleCustom4.modCode,
+    information4: algoResults.mod4Slots,
+    module5: moduleCustom5.modCode,
+    information5: algoResults.mod5Slots,
+    module6: moduleCustom6.modCode,
+    information6: algoResults.mod6Slots,
+    clashes: algoResults.err,
+    number: 6,
+  });
 
   try {
     await customisedModuleSetSix.save();
@@ -481,6 +536,7 @@ const createModuleSetSeven = async (req, res, next) => {
     information6: moduleInformation6,
     module7: module7.toUpperCase(),
     information7: moduleInformation7,
+
     number: 7,
   });
 
@@ -566,7 +622,7 @@ const customiseModuleSetSeven = async (req, res, next) => {
     return next(error);
   }
 
-  const customisedModuleSetSeven = new CustomModuleSetSeven({
+  var customisedModuleSetSeven = new CustomModuleSetSeven({
     module1: moduleCustom1.modCode,
     information1: moduleCustom1,
     module2: moduleCustom2.modCode,
@@ -584,7 +640,34 @@ const customiseModuleSetSeven = async (req, res, next) => {
     number: 7,
   });
 
-  extractInformation(customisedModuleSetSeven);
+  var extractedData = await extractInformation(customisedModuleSetSeven);
+
+  let algoResults;
+  try {
+    algoResults = await algorithm(extractedData, 7);
+  } catch (error) {
+    console.log(error);
+    return next(error);
+  }
+
+  customisedModuleSetSeven = new CustomModuleSetSeven({
+    module1: moduleCustom1.modCode,
+    information1: algoResults.mod1Slots,
+    module2: moduleCustom2.modCode,
+    information2: algoResults.mod2Slots,
+    module3: moduleCustom3.modCode,
+    information3: algoResults.mod3Slots,
+    module4: moduleCustom4.modCode,
+    information4: algoResults.mod4Slots,
+    module5: moduleCustom5.modCode,
+    information5: algoResults.mod5Slots,
+    module6: moduleCustom6.modCode,
+    information6: algoResults.mod6Slots,
+    module7: moduleCustom7.modCode,
+    information7: algoResults.mod7Slots,
+    clashes: algoResults.err,
+    number: 7,
+  });
 
   try {
     await customisedModuleSetSeven.save();
@@ -693,6 +776,7 @@ const createModuleSetEight = async (req, res, next) => {
     information7: moduleInformation7,
     module8: module8.toUpperCase(),
     information8: moduleInformation8,
+
     number: 8,
   });
 
@@ -785,7 +869,7 @@ const customiseModuleSetEight = async (req, res, next) => {
     return next(error);
   }
 
-  const customisedModuleSetEight = new CustomModuleSetEight({
+  var customisedModuleSetEight = new CustomModuleSetEight({
     module1: moduleCustom1.modCode,
     information1: moduleCustom1,
     module2: moduleCustom2.modCode,
@@ -805,7 +889,36 @@ const customiseModuleSetEight = async (req, res, next) => {
     number: 8,
   });
 
-  extractInformation(customisedModuleSetEight);
+  var extractedData = await extractInformation(customisedModuleSetEight);
+
+  let algoResults;
+  try {
+    algoResults = await algorithm(extractedData, 8);
+  } catch (error) {
+    console.log(error);
+    return next(error);
+  }
+
+  customisedModuleSetEight = new CustomModuleSetEight({
+    module1: moduleCustom1.modCode,
+    information1: algoResults.mod1Slots,
+    module2: moduleCustom2.modCode,
+    information2: algoResults.mod2Slots,
+    module3: moduleCustom3.modCode,
+    information3: algoResults.mod3Slots,
+    module4: moduleCustom4.modCode,
+    information4: algoResults.mod4Slots,
+    module5: moduleCustom5.modCode,
+    information5: algoResults.mod5Slots,
+    module6: moduleCustom6.modCode,
+    information6: algoResults.mod6Slots,
+    module7: moduleCustom7.modCode,
+    information7: algoResults.mod7Slots,
+    module8: moduleCustom8.modCode,
+    information8: algoResults.mod8Slots,
+    clashes: algoResults.err,
+    number: 8,
+  });
 
   try {
     await customisedModuleSetEight.save();

@@ -15,6 +15,7 @@ const customModuleSetSix = new Schema({
   information5: { type: Object, required: true },
   module6: { type: String, required: true },
   information6: { type: Object, required: true },
+  clashes: { type: Boolean, required: true },
   number: { type: Number, required: true },
 });
 

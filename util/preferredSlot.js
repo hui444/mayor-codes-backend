@@ -4,7 +4,6 @@ const preferredSlot = (data) => {
   var tutSlot, lecSlot, secSlot, labSlot, recSlot, message;
 
   //   console.log(data);
-
   var modCode = data[0];
   if (data.length === 1) {
     message = "No information available";
@@ -13,7 +12,7 @@ const preferredSlot = (data) => {
     var i = 1;
     while (data[i]) {
       var ArrZero = data[i].split(" ");
-      if (ArrZero[i] === "Tutorial") {
+      if (ArrZero[1] === "Tutorial") {
         tutSlot = ArrZero[2];
       } else if (ArrZero[1] === "Lecture") {
         lecSlot = ArrZero[2];

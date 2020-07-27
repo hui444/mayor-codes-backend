@@ -1,115 +1,121 @@
-const deleteTime = require("./deleteTime");
+const checkSlot = require("./checkSlot");
 const whichDay = require("./whichDay");
+const deleteTime = require("./deleteTime");
 
 const algo_partOne = async (
   classDetails,
   classInfo,
-  uniqueClassInfo,
-  uniqueClasses,
+  uniqueClassNo,
+  numUniqueClass,
   week_arr
 ) => {
-  let error = false,
-    goNextClass = false,
-    i;
+  var error = false;
   if (classDetails) {
     if (classDetails !== "Choose") {
       var classSlot = classDetails[classDetails.length - 1];
       return { week_arr, classSlot, error };
-    }
-    // console.log(week_arr);
-    if (classDetails === "Choose") {
-      var slotFound = false,
-        j = 0,
+    } else {
+      //classDetails = "Choose"
+      var j = 0,
         classSlot;
-      while (!slotFound) {
-        let NEW_week_arr = [];
-        classDetails = classInfo.filter((x) => {
-          return x.classNo === uniqueClassInfo[j];
-        }); //generate class information and classNo
-        let WeekIndex = 0; //set weekIndex to 0
-        console.log(" THIS IS FROM LINE 30");
-        console.log(classDetails[0].classNo);
-        for (i = 0; i < classDetails.length; i += 1) {
-          //i is the index of classDetails
-          let k = classDetails[i].weeks[WeekIndex]; //k = week number
+      //slot not found
+      while (true) {
+        var generateNewClass;
+        //generate class information and classNo
+        classDetails = await classInfo.filter((x) => {
+          return x.classNo === uniqueClassNo[j];
+        });
 
-          console.log(i, " THIS IS I FROM LINE 32");
-          while (k <= classDetails[i].weeks[classDetails[i].weeks.length - 1]) {
-            //while week number <= last week number
-            //make new array for the current week
-            NEW_week_arr[k - 1] = await deleteTime(
-              week_arr[k - 1][0],
+        //check if all classes of this classNo fits
+        //loop the number of classes this classNo has
+        for (let i = 0; i <= classDetails.length - 1; i++) {
+          var weekIndex = 0;
+          var weekNum = classDetails[i].weeks[weekIndex];
+
+          //loop the number of weeks this class has
+          while (
+            weekNum <= classDetails[i].weeks[classDetails[i].weeks.length - 1]
+          ) {
+            //check if class fits
+            var fits = await checkSlot(
+              week_arr[weekNum - 1],
               whichDay(classDetails[i]),
-              classDetails[i],
-              true
+              classDetails[i]
             );
-            // console.log(week_arr[k][0]);
-            // console.log(week_arr[k - 1][0]);
-            //if new week array exits - slot fits
-            if (NEW_week_arr[k - 1]) {
-              //if this is the last week and the slot fits, go check next class
-              if (
-                k === classDetails[i].weeks[classDetails[i].weeks.length - 1]
-              ) {
-                //finished deleting
-                week_arr[k - 1][0] = NEW_week_arr[k - 1];
-                classSlot = classDetails[i];
-                slotFound = true;
-                goNextClass = true;
-                break;
-                // return { week_arr, classSlot, error };
-              } else {
-                //delete next week
-                WeekIndex += 1;
-                k = classDetails[i].weeks[WeekIndex];
-                console.log(k, "THIS IS FROM LINE 58");
-                console.log(
-                  classDetails[i].weeks[classDetails[i].weeks.length - 1]
-                );
-                continue;
-              }
-            } else {
-              if (j >= uniqueClasses - 1) {
-                //none of the classes fit
-                classDetails = classInfo.filter((x) => {
-                  return x.classNo === uniqueClassInfo[0];
+
+            //class doesnt fit, generate next class info
+            if (!fits) {
+              if (j === numUniqueClass - 1) {
+                //all classes did not fit, default take first slot
+                classDetails = await classInfo.filter((x) => {
+                  return x.classNo === uniqueClassNo[0];
                 });
-                error = true;
-                console.log("help");
-                for (let m = 0; m < classDetails.length; m++) {
-                  let WeekIndex2 = 0;
-                  let k = classDetails[m].weeks[WeekIndex2];
+                //loop all classes in found class slot
+                for (let k = 0; k <= classDetails.length - 1; k++) {
+                  var weekIndex3 = 0;
+                  var weekNum3 = classDetails[k].weeks[weekIndex3];
+                  //loop weeks of class
                   while (
-                    k <= classDetails[m].weeks[classDetails[m].weeks.length - 1]
+                    weekNum3 <=
+                    classDetails[k].weeks[classDetails[k].weeks.length - 1]
                   ) {
-                    week_arr[k - 1][0] = await deleteTime(
-                      week_arr[k - 1][0],
-                      whichDay(classDetails[m]),
-                      classDetails,
-                      false
+                    week_arr[weekNum3 - 1] = await deleteTime(
+                      week_arr[weekNum3 - 1],
+                      whichDay(classDetails[k]),
+                      classDetails[k]
                     );
-                    WeekIndex2++;
-                    k = classDetails[m].weeks[WeekIndex2];
+                    weekIndex3++;
+                    weekNum3 = classDetails[k].weeks[weekIndex3];
                   }
-                  classSlot = classDetails[i];
                 }
+                //all classes deleted, week array returned
+                classSlot = classDetails[classDetails.length - 1];
+                error = true;
                 return { week_arr, classSlot, error };
               }
-              //current classNo doesnt fit, go to next classNo
-              // console.log(NEW_week_arr[k - 1]);
-              goNextClass = true;
               j++;
+              generateNewClass = true;
               break;
             }
+            //class fits, check next week
+            generateNewClass = false;
+            weekIndex++;
+            weekNum = classDetails[i].weeks[weekIndex];
           }
-          if (goNextClass) {
-            goNextClass = false;
-            break;
-          } else continue;
+          if (generateNewClass) break;
+
+          //checked all classes and found class slot, delete class slot and return week_arr
+          if (i === classDetails.length - 1) {
+            // console.log("it came through");
+            //loop all classes in found class slot
+            for (let m = 0; m <= classDetails.length - 1; m++) {
+              var weekIndex2 = 0;
+              var weekNum2 = classDetails[m].weeks[weekIndex2];
+
+              //loop weeks of class
+              while (
+                weekNum2 <=
+                classDetails[m].weeks[classDetails[m].weeks.length - 1]
+              ) {
+                week_arr[weekNum2 - 1] = await deleteTime(
+                  week_arr[weekNum2 - 1],
+                  whichDay(classDetails[m]),
+                  classDetails[m]
+                );
+                weekIndex2++;
+                weekNum2 = classDetails[m].weeks[weekIndex2];
+              }
+            }
+            //all classes deleted, week array returned
+            classSlot = classDetails[classDetails.length - 1];
+            error = false;
+            return { week_arr, classSlot, error };
+          }
         }
       }
     }
   }
+  console.log("there is a problem");
   return { week_arr, classSlot, error };
 };
 

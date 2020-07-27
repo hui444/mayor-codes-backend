@@ -88,8 +88,8 @@ const extractInformation = async (data) => {
   }
   if (data.number >= 8) {
     if (!data.information8.message) {
-      extractedData8 = moduleData(data.information8, classInfo8);
       classInfo8 = await getInfoForModuleCode(data.module8);
+      extractedData8 = moduleData(data.information8, classInfo8);
     } else {
       modCode = data.module8;
       message = data.information8.message;

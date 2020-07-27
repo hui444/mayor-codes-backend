@@ -28,6 +28,7 @@ const algorithm = async (data, number) => {
     mod6Result,
     mod7Result,
     mod8Result;
+
   var mod1Slots,
     mod2Slots,
     mod3Slots,
@@ -36,6 +37,7 @@ const algorithm = async (data, number) => {
     mod6Slots,
     mod7Slots,
     mod8Slots;
+
   var err;
 
   //delete all preferred slots/restrictions

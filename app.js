@@ -35,8 +35,7 @@ app.use((error, req, res, next) => {
   res.json({ message: error.message || "An unkown error has occured!" });
 });
 
-const connectUrl =
-  "mongodb+srv://huihui:Password123@cluster0-uwlxb.mongodb.net/mern?retryWrites=true&w=majority";
+const connectUrl = `mongodb+srv://${process.enb.DB_USER}:${process.enb.DB_PASSWORD}@cluster0-uwlxb.mongodb.net/${process.enb.DB_NAME}?retryWrites=true&w=majority`;
 const connectConfig = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
